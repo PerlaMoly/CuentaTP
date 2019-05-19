@@ -1,8 +1,8 @@
 package ar.edu.unlam.pb2.CuentasTP;
 
 public class CuentaCorriente extends CuentaSueldo {
-      
-	private Double limite;
+
+	private Double limite=150.00;
 
 	public Double getLimite() {
 		return limite;
@@ -11,32 +11,28 @@ public class CuentaCorriente extends CuentaSueldo {
 	public void setLimite(Double limite) {
 		this.limite = limite;
 	}
-	
-	public CuentaCorriente (Double saldo, Double limite)
-	{
+
+	public CuentaCorriente(Double saldo) {
 		super(saldo);
 		this.limite = limite;
 	}
-	
+
+	public CuentaCorriente() {
+	}
+
 	@Override
 	public Double extraer(Double cantidad) {
-		
-		Double retiro  = 0.0;
-		Double recargo = (5 * this.limite)/100;
-		
-		
-		if(cantidad<0) {
-			return 0.0;
+
+		if (saldo<cantidad && cantidad > 0.0) {
+
+			if ((cantidad - saldo) <= limite) {
+
+				this.saldo -= (limite * 1.05);
+				return cantidad;
+			}
+
 		}
-		
-		if(cantidad > this.saldo) {
-			retiro = this.limite - cantidad - recargo;
-			return retiro;
-		}
-		
-		retiro = this.saldo - cantidad;
-		
-		return retiro;
+		return cantidad;
 	}
-	
+
 }
