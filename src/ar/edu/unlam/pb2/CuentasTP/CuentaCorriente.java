@@ -2,7 +2,7 @@ package ar.edu.unlam.pb2.CuentasTP;
 
 public class CuentaCorriente extends CuentaSueldo {
 
-	private Double limite=150.00;
+	private Double limite;
 
 	public Double getLimite() {
 		return limite;
@@ -12,27 +12,40 @@ public class CuentaCorriente extends CuentaSueldo {
 		this.limite = limite;
 	}
 
-	public CuentaCorriente(Double saldo) {
+	public CuentaCorriente(Double saldo, Double limite) {
 		super(saldo);
 		this.limite = limite;
 	}
 
+	/*
+	 * public CuentaCorriente() { }
+	 */
+
 	public CuentaCorriente() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Double extraer(Double cantidad) {
+		Double retiro = 0.00;
 
-		if (saldo<cantidad && cantidad > 0.0) {
+		if ((cantidad < 0.0) || (cantidad > this.saldo + this.limite)) {
 
-			if ((cantidad - saldo) <= limite) {
+			return -300.00;
+		}
 
-				this.saldo -= (limite * 1.05);
-				return cantidad;
-			}
+		if ((cantidad > this.saldo) && ((cantidad - this.saldo) < this.limite)) {
+
+			retiro -= this.saldo - ((cantidad - this.saldo));
+			this.saldo -= retiro * 1.05;
+			this.limite -= retiro;
 
 		}
-		return cantidad;
+
+		else {
+			this.saldo -= cantidad;
+		}
+		return this.saldo;
 	}
 
 }

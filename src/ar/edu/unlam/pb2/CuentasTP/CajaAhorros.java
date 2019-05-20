@@ -1,15 +1,14 @@
 package ar.edu.unlam.pb2.CuentasTP;
 
 public class CajaAhorros extends CuentaSueldo {
+	private Double costoAdicional = 6.00;
+	private Integer extracciones = 0;
 
-	private Integer costoAdicional = 6;
-	private Integer extracciones = 0; // LA CANTIDAD DE EXTRACCIONES EMPIEZA CON CERO. POR ESO LO CAMBIÉ
-
-	public Integer getCostoAdicional() {
+	public Double getCostoAdicional() {
 		return costoAdicional;
 	}
 
-	public void setCostoAdicional(Integer costoAdicional) {
+	public void setCostoAdicional(Double costoAdicional) {
 		this.costoAdicional = costoAdicional;
 	}
 
@@ -30,21 +29,34 @@ public class CajaAhorros extends CuentaSueldo {
 	}
 
 	@Override
-
 	public Double extraer(Double cantidad) {
 
-		if ((cantidad <= saldo) && (cantidad > 0.0)) {
-			this.saldo = saldo - cantidad;
-		
-			extracciones += this.extracciones;
+		if ((cantidad > this.saldo) || (cantidad < 0.0)) {
+			return -300.00;
+
+		}
+		this.extracciones++;
+		if (this.extracciones > 5) 
+		{
+
+			if (this.saldo >= (cantidad + costoAdicional)) 
+			{
+				this.saldo -= (cantidad + costoAdicional);
+				this.extracciones++;
+			} else 
+				
+			{
+				this.extracciones --;
+				return -300.00;
+				
+			}
+		} else {
+
+			this.saldo -= cantidad;
+			
 		}
 
-		if (extracciones >= 5) {
-			saldo = saldo - costoAdicional;
-			return cantidad;
-		}
-
-		return cantidad;
+		return this.saldo;
 	}
 
 }

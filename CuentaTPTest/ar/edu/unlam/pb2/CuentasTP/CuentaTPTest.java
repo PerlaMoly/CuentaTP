@@ -14,12 +14,14 @@ public class CuentaTPTest {
 
 	}
 
+	
+	
 	@Test
 	public void probarExtraerDeLacuentaSueldo() {
 		CuentaSueldo miCuenta = new CuentaSueldo();
 		Double saldoCuenta = miCuenta.depositar(4000.00);
 		Double esperado = miCuenta.extraer(500.00);
-		Double obtenido = saldoCuenta - 3500.00;
+		Double obtenido = saldoCuenta-500.00;
 		Assert.assertEquals(esperado, obtenido);
 
 	}
@@ -27,9 +29,9 @@ public class CuentaTPTest {
 	@Test
 	public void probarExtraerDeLacuentaSueldoCuandoNoTieneSaldo() {
 		CuentaSueldo miCuenta = new CuentaSueldo();
-		Double saldoCuenta = miCuenta.depositar(0.00);
+		miCuenta.depositar(0.00);
 		Double obtenido = miCuenta.extraer(1.00);
-		Assert.assertEquals(0.00, obtenido, 00.00);
+		Assert.assertEquals(-300.00, obtenido, 00.00);
 
 	}
 
@@ -42,29 +44,32 @@ public class CuentaTPTest {
 
 	}
 
+	
 	@Test
 	public void probarExtraerDeLaCajaDeAhorros() {
 		CajaAhorros miCuenta = new CajaAhorros();
-		Double saldoCuenta = miCuenta.depositar(4000.00) - 3500.00;
-				Double obtenido = miCuenta.extraer(500.00);
+		Double saldoCuenta = miCuenta.depositar(4000.00)-500.00;
+		Double obtenido = miCuenta.extraer(500.00);
 		Assert.assertEquals(saldoCuenta, obtenido, 00.0);
 
 	}
 
+
 	@Test
 	public void probarMasDeCincoExtracciones() {
 		CajaAhorros miCuenta = new CajaAhorros();
-		Double saldoCuenta = miCuenta.depositar(4000.00);
+		miCuenta.depositar(4000.00);
+		Double extraccion0 = miCuenta.extraer(500.00);
 		Double extraccion1 = miCuenta.extraer(500.00);
 		Double extraccion2 = miCuenta.extraer(500.00);
 		Double extraccion3 = miCuenta.extraer(500.00);
 		Double extraccion4 = miCuenta.extraer(500.00);
 		Double extraccion5 = miCuenta.extraer(100.00);
-
-		Assert.assertEquals(100.00, extraccion5, 00.0);
+		Assert.assertEquals(1394.00, extraccion5, 00.0);
 
 	}
 
+	
 	@Test
 	public void probarDepositarDeLaCuentaCorriente() {
 		CuentaCorriente miCuenta = new CuentaCorriente();
@@ -77,8 +82,8 @@ public class CuentaTPTest {
 	
 	@Test
 	public void probarExtraerDeLaCuentaCorrienteSinSobregiro() {
-		CuentaCorriente miCuenta = new CuentaCorriente();
-		Double saldoCuenta = miCuenta.depositar(4000.00) - 3500.00;
+		CuentaCorriente miCuenta = new CuentaCorriente(0.00,150.00);
+		Double saldoCuenta = miCuenta.depositar(4000.00) - 500.00;
 		Double obtenido = miCuenta.extraer(500.00);
 		Assert.assertEquals(saldoCuenta, obtenido, 00.0);
 
@@ -87,12 +92,11 @@ public class CuentaTPTest {
 	
 	@Test
 	public void probarExtraerDeLaCuentaCorrienteconSobregiro() {
-		CuentaCorriente miCuenta = new CuentaCorriente();
+		CuentaCorriente miCuenta = new CuentaCorriente(0.00,150.00);
 		Double saldoCuenta = miCuenta.depositar(100.00);
 		Double limite = miCuenta.getLimite();
 		Double obtenido = miCuenta.extraer(200.00);
-		Assert.assertEquals(200.00, obtenido, 00.0);
+		Assert.assertEquals(100.00, obtenido, 00.0);
 
 	}
-	
 }

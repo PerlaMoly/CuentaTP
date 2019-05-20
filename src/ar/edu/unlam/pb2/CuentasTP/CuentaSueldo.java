@@ -5,38 +5,38 @@ public class CuentaSueldo {
 	protected Double saldo;
 
 	public Double getSaldo() {
-		return this.saldo;
+		return saldo;
 	}
 
-/*	public void setSaldo(Double saldo) {
+	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
 	}
-*/
-	public CuentaSueldo() {
 
+	public CuentaSueldo() {
+		this.saldo = 0.0;
 	}
 
 	public CuentaSueldo(Double saldo) {
 		this.saldo = saldo;
 	}
 
-
 	public Double depositar(Double cantidad) {
-		 
-			this.saldo=cantidad;
-		
-			return this.saldo;
-	
+		/*if (this.saldo == 0.0) {
+			return cantidad;
+		}*/
+		this.saldo+=cantidad;
+		return this.saldo ;
+
 	}
-	
-	
+
 	public Double extraer(Double cantidad) {
 
-		if (saldo >= cantidad && cantidad > 0.00) {
-			return cantidad;
+		Double retiro = 0.0;
+		if ((cantidad < 0) || (cantidad > this.saldo)) {
+			return -300.00;
 		}
-		return 0.00;
-
+		retiro = this.saldo - cantidad;
+		return retiro;
 	}
 
 }
